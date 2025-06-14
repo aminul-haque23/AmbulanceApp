@@ -1,0 +1,72 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimal Register Test</title>
+</head>
+<body>
+  <h1>Test Registration</h1>
+  <form id="regForm">
+    <label>
+      Name:<br />
+      <input type="text" id="name" required />
+    </label><br /><br />
+    <label>
+      Email:<br />
+      <input type="email" id="email" required />
+    </label><br /><br />
+    <label>
+      Password:<br />
+      <input type="password" id="password" required />
+    </label><br /><br />
+    <label>
+      Role:<br />
+      <select id="role">
+        <option value="user">user</option>
+        <option value="driver">driver</option>
+        <option value="admin">admin</option>
+      </select>
+    </label><br /><br />
+    <button type="submit">Register</button>
+  </form>
+  <pre id="output" style="background:#f4f4f4; padding:10px;"></pre>
+
+  <script>
+    // Grab form and output elements
+    const form = document.getElementById('regForm');
+    const output = document.getElementById('output');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      // Build the payload from the form fields
+      const payload = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        role: document.getElementById('role').value
+      };
+
+      output.textContent = '⏳ Registering...';
+
+      try {
+        // Send the POST request to your backend
+        const res = await fetch('http://localhost:5000/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        // Display whatever the backend sent back
+        output.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        output.textContent = '❌ Network error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
