@@ -28,6 +28,10 @@ app.get("/api/ping", (req, res) => {
   res.json({ msg: "pong" });
 });
 
+app.get("/", (req, res) => {
+  res.send("🚑 Backend is running.");
+});
+
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/dashboard", require("./routes/dashboard"));
 
