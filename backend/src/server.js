@@ -12,9 +12,15 @@ const app = express();
 // Connect to MongoDB before handling any requests
 connectDB();
 
+const FRONTEND_URL = process.env.FRONTEND_URL || "*";
+
 // 2. Enable CORS for your React dev server
 //    Change the origin as needed for production.
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    origin: FRONTEND_URL,
+  })
+);
 
 // Built‑in middleware to parse incoming JSON payloads
 app.use(express.json());
