@@ -22,7 +22,7 @@ export default function DriverDashboard() {
       return;
     }
 
-    fetch("http://localhost:5000/api/auth/me", {
+    fetch(`${process.env.REACT_APP_API_URL}/api/auth/me`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
